@@ -1,237 +1,183 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html lang="ja">
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>DK</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="bmstable" content="header.json" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/table.css" />
+	</head>
+	<body class="single is-preload">
 
-<head>
-<title>DK INSANE TABLE</title>
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="bmstable" content="./header.json" /> <!--　読み込む難易度表のヘッダファイルをここに指定　-->
-<link href="style/style.css" rel="stylesheet" type="text/css" media="screen,print" />
-<script src="style/jquery-2.0.2.min.js"></script>
-</head>
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-<body>
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">DK INSANE ARCHIVE</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="table.html">Table</a></li>
+								<li><a href="https://twitter.com/Frozen_sat">Twitter</a></li>
+								<li><a href="https://www.youtube.com/channel/UCYbCFRgLZwDGIps8hHUf_Uw">Youtube</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
 
-<center>
-<strong><span style="font-size: 24pt;">DK INSANE TABLE</span></strong>
-<p id="update"></p>
-<a href="index.html">TOP</a><br>
-</center>
+				<!-- Menu -->
+					<section id="menu">
 
+						<!-- Title 2 -->
+							<section>
+								<h2>DK INSANE ARCHIVE</h2>
+							</section>
 
-<!--　　　　　ここから難易度表本体　　　　　-->
-<div class="tableflame">
-<table align="center" cellspacing="1" cellpadding=2　border="0" bgcolor="#000000" id="table_int">
-</table>
-</div>
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="table.html">
+											<h3>DK Insane Table</h3>
+											<p>My Insane BMS Pattern Collection</p>
+										</a>
+									</li>
+									<li>
+										<a href="https://twitter.com/Frozen_sat">
+											<h3>Twitter</h3>
+											<p>Please send DM here.</p>
+										</a>
+									</li>
+									<li>
+										<a href="https://www.youtube.com/channel/UCYbCFRgLZwDGIps8hHUf_Uw">
+											<h3>My Youtube</h3>
+											<p>My BMS pattern AUTOPLAY</p>
+										</a>
+									</li>
+								</ul>
+							</section>
 
-<script language="javascript" type="text/javascript">
+					</section>
 
-// メニュー開閉
-function menu(tName){
-	var tMenu = document.getElementById(tName).style;
-	if (tMenu.display == 'none'){
-		tMenu.display = "block";
-	}else{
-		tMenu.display = "none";
-	}
-}
+				<!-- Main -->
+					<div id="main">
+						<!-- Post -->
+						<article class="post">
+							<header>
+								<div class="title">
+									<h2>DK INSANE TABLE</h2>
+									<p>My Insane BMS Pattern Collection</p>
+								</div>
+							</header>
+							<div id="update"></div>
+							<br>
+								<button id="show_log" class="button small" onclick="showlog()">View Changelog</button>
+								<br>
+									<br>
+										<div id="changelog"></div>
+										<br>
+											<div class="table-wrapper">
+												<table align="center" id="shortcut_diff">
+													<td>
+														<a href="#DK 0-">DK 0-</a>
+													</td>
+													<td>
+														<a href="#DK 0">DK 0</a>
+													</td>
+													<td>
+														<a href="#DK 1">DK 1</a>
+													</td>
+													<td>
+														<a href="#DK 2">DK 2</a>
+													</td>
+													<td>
+														<a href="#DK 3">DK 3</a>
+													</td>
+													<td>
+														<a href="#DK 4">DK 4</a>
+													</td>
+													<td>
+														<a href="#DK 5">DK 5</a>
+													</td>
+													<td>
+														<a href="#DK 6">DK 6</a>
+													</td>
+													<td>
+														<a href="#DK 7">DK 7</a>
+													</td>
+													<td>
+														<a href="#DK 8">DK 8</a>
+													</td>
+													<td>
+														<a href="#DK 9">DK 9</a>
+													</td>
+													<td>
+														<a href="#DK 10">DK 10</a>
+													</td>
+												</table>
+											</div>
+											<div class="table-wrapper tableflame">
+												<table align="center" class="tablesorter">
+													<thead>
+														<tr>
+															<th width="6%">Lv</th>
+															<th width="1%">Movie</th>
+															<th width="1%">Score</th>
+															<th width="20%">Title</th>
+															<th width="20%">Artist</th>
+															<th width="5%">DL</th>
+															<th width="25%">Comment</th>
+														</tr>
+													</thead>
+													<tbody id="table_int"></tbody>
+												</table>
+											</div>
+										</article>
+									</div>
 
+				<!-- Footer -->
+					<section id="footer">
+						<ul class="icons">
+							<li><a href="https://twitter.com/Frozen_sat" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="https://www.youtube.com/channel/UCYbCFRgLZwDGIps8hHUf_Uw" class="icon brands fa-youtube"><span class="label">Youtube</span></a></li>
+						</ul>
+						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>.</p>
+					</section>
 
-$(document).ready(function(){
-	$.getJSON($("meta[name=bmstable]").attr("content"), function(header){
-		$("#update").text("Last Update : " + header.last_update);
-		$.getJSON(header.data_url, function(information){
-			// headerのsort有無で分岐
-			if(header["level_order"]){
-				makeBMSTable(information,header.symbol,header["level_order"]);
-			} else {
-			makeBMSTable(information,header.symbol);
-			}
-		});
-	});
-});
+			</div>
 
-
-// ソートのための引数追加
-function makeBMSTable(info, mark, order) {
-	// orderが未指定の場合はnull
-	if(typeof order === 'undefined'){
-		order = null;
-	}
-	
-    var x = "";
-    var ev = "";
-    var count = 0;
-    var obj = $("#table_int");
-
-	// ソート
-	if(order != "" && order != null){
-		// herder.jsonにsortが存在する場合は指定順->タイトル順にソート
-		
-		var orderAry = [];
-		for(var l = 0; l < order.length; l++){
-			orderAry.push(order[l].toString());
-		}
-		
-		for(var j = 0; j < info.length; j++){
-		    var index=orderAry.indexOf(info[j]["level"]);
-		    info[j]["_index"]=index;
-		}
-
-		info.sort(function(a,b){
-		    if(a["_index"] < b["_index"]){
-				return -1;
-		    } else if(a["_index"] > b["_index"]){
-				return 1;
-			} else if( a["title"].toLowerCase() < b["title"].toLowerCase() ){
-				return -1;
-			} else if( a["title"].toLowerCase() > b["title"].toLowerCase() ){
-				return 1;
-			} else {
-	　	　　	return 0;
-			}
-		});
-		for(var k=0; k < info.length; k++){
-			delete info[k]["_index"];
-		}
-	} else {
-		// そうでない場合はレベル順->タイトル順にソート
-		info.sort(
-			function(a,b){
-				var aLv = a["level"].toString();
-				var bLv = b["level"].toString();
-				if(isNaN(a["level"]) == false && isNaN(b["level"]) == false){
-					return a["level"]-b["level"];
-				} else if( aLv < bLv ){
-					return -1;
-				} else if( aLv > bLv ){
-					return 1;
-				} else if( a["title"].toLowerCase() < b["title"].toLowerCase() ){
-					return -1;
-				} else if( a["title"].toLowerCase() > b["title"].toLowerCase() ){
-					return 1;
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/table.js"></script>
+			<script>
+			$(function(){
+				$("#changelog").load("change.txt");
+			});
+			
+			function showlog() {
+				if ($('#changelog').css('display') == 'none') {
+					$('#changelog').show();
 				} else {
-		　	　　	return 0;
+					$('#changelog').hide();
 				}
 			}
-		);
-	}
-	
-    // 表のクリア
-    obj.html("");
-    $("<tr height='20' style='color:white;background-color:#666666'><td align='center'>LV</td><td align='center'>Movie</td><td align='center'>Score</td><td align='center'>Title</td><td align='center'>Artist</td><td align='center'>DL</td><td align='center'>Comment</td></tr>").appendTo(obj);
-    var obj_sep = null;
-    for (var i = 0; i < info.length; i++) {
-        // 難度ごとの区切り
-        if (x != info[i].level) {
-            // 前の区切りに譜面数、平均密度を追加
-          	if (obj_sep != null) {
-                obj_sep.html("<td colspan='7' align='center'>" + "<b>" + mark + x + " (" + count + "譜面)</b></td>");
-            }
-            obj_sep = $("<tr class='tr_separate' id='" + mark + info[i].level + "'></tr>");
-            obj_sep.appendTo(obj);
-            count = 0;
-            x = info[i].level;
-        }
-        // 本文
-        var str = $("<tr class='tr_normal'></tr>");
+			</script>
 
-        if(info[i].state == 1) {
-        str = $("<tr class='state1'></tr>");
-        }
-        if(info[i].state == 2) {
-        str = $("<tr class='state2'></tr>");
-        }
-        if(info[i].state == 3) {
-        str = $("<tr class='state3'></tr>");
-        }
-        if(info[i].state == 4) {
-        str = $("<tr class='state4'></tr>");
-        }
-        if(info[i].state == 5) {
-        str = $("<tr class='state5'></tr>");
-        }
-        if(info[i].state == 6) {
-        str = $("<tr class='state6'></tr>");
-
-        }
-
-        // レベル表記
-        $("<td width='6%'>" + mark + x + "</td>").appendTo(str);
-        // 動画
-		if(info[i].video1 != "" && info[i].video1 != null){
-			// ニコニコ
-			$("<td width='1%' align='center'><a href='http://www.nicovideo.jp/watch/sm" + info[i].video1 + "' target='_blank'><img src='style/nico.gif' border='0' alt='ニコニコ動画' /></a></td>").appendTo(str);
-		} else if(info[i].video2 != "" && info[i].video2 != null){
-			// YouTube
-			$("<td width='1%' align='center'><a href='http://www.youtube.com/watch?v=" + info[i].video2 + "' target='_blank'><img src='style/youtube.gif' border='0' alt='Youtube' /></a></td>").appendTo(str);
-		} else if(info[i].video3 != "" && info[i].video3 != null){
-			// vimeo
-			$("<td width='1%' align='center'><a href='http://vimeo.com/" + info[i].video3 + "' target='_blank'><img src='style/vimeo.gif' border='0' alt='vimeo' /></a></td>").appendTo(str);
-		} else {
-        	$("<td width='1%'></td>").appendTo(str);
-		}
-　　　　// 譜面画像
-　　　　$("<td width='1%' akign='center'><a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" + info[i].md5 + "' target='_blank'>■</a></td>").appendTo(str);
-
-        // タイトル
-        $("<td width='20%'>" + "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5=" + info[i].md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
-        // アーティスト
-        var astr = "";
-        if(info[i].url != "" && info[i].url != null) {
-        	if(info[i].artist != "" && info[i].artist != null) {
-        		astr = "<a href='" + info[i].url + "'>" + info[i].artist + "</a>";
-        	} else {
-        		astr = "<a href='" + info[i].url + "'>" + info[i].url + "</a>";
-        	}
-        } else {
-        	if(info[i].artist != "" && info[i].artist != null) {
-        		astr = info[i].artist;
-        	}
-        }
-        if(info[i].url_pack != "" && info[i].url_pack != null) {
-        	if(info[i].name_pack != "" && info[i].name_pack != null) {
-        		astr += "<br />(<a href='" + info[i].url_pack + "'>" + info[i].name_pack + "</a>)";
-        	} else {
-        		astr += "<br />(<a href='" + info[i].url_pack + "'>" + info[i].url_pack + "</a>)";
-        	}
-        } else {
-        	if(info[i].name_pack != "" && info[i].name_pack != null) {
-        		astr += "<br />(" + info[i].name_pack + ")";
-        	}
-        }
-        $("<td width='20%'>" + astr + "</td>").appendTo(str);
-        // 差分
-        if(info[i].url_diff != "" && info[i].url_diff != "") {
-        	if(info[i].name_diff != "" && info[i].name_diff != null) {
-	        $("<td width='15%'><a href='" + info[i].url_diff + "'>" + info[i].name_diff + "</a></td>").appendTo(str);
-        	} else {
-	        $("<td width='15%'><a href='" + info[i].url_diff + "'>Link</a></td>").appendTo(str);
-        	}
-        } else {
-        	if(info[i].name_diff != "" && info[i].name_diff != null) {
-	        $("<td width='15%'>" + info[i].name_diff + "</td>").appendTo(str);
-        	} else {
-	        $("<td width='15%'>同梱</td>").appendTo(str);
-        	}
-        }
-        // コメント
-        $("<td width='25%'>" + info[i].comment + "</div></td>").appendTo(str);
-        str.appendTo(obj);
-        count++;
-    }
-
-    
-    // 最後の区切り処理
-	// マークが抜け落ちてたので追加
-    if (obj_sep != null) {
-        obj_sep.html("<td colspan='7' align='center'>" + "<b>" + mark + x + " (" + count + "譜面)</b></td>");
-    }
-}
-</script>
-
-
-</body>
+	</body>
 </html>
