@@ -1,1 +1,2 @@
-﻿(2019.10.05) Site Open.
+﻿(2019.10.09) Add introspect [SP ANOTHER] & [SP INSANE]
+(2019.10.05) Site Open.
