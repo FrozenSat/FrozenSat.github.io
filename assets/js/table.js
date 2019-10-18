@@ -143,7 +143,7 @@ function makeBMSTable(info, mark, order) {
         	$("<td width='1%'></td>").appendTo(str);
 		}
 　　　　// 譜面画像
-　　　　$("<td width='1%' akign='center'><a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" + info[i].md5 + "' class='fas fa-lg fa-music' target='_blank'></a></td>").appendTo(str);
+　　　　$("<td width='1%' align='center'><a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" + info[i].md5 + "' class='fas fa-lg fa-music' target='_blank'></a></td>").appendTo(str);
 
         // タイトル
         $("<td width='20%'>" + "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5=" + info[i].md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
