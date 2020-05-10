@@ -1,4 +1,5 @@
-﻿(2020.05.07) Add 蘭 [草]
+﻿(2020.05.10) Add Praesidium tridacnae [Babel]
+(2020.05.07) Add 蘭 [草]
 (2020.04.14) Fix Pourqaa diff
 (2020.04.10) Add Celeste [Atlantis]
 (2020.04.06) Add Armageddon [Calamity]
