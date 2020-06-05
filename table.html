@@ -6,21 +6,12 @@
 -->
 <html>
 	<head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-164267471-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-164267471-1');
-</script>
 		<title>DK</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="bmstable" content="header.json" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/table.css" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta name="bmstable" content="header.json">
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/table.css">
 	</head>
 	<body class="single is-preload">
 
@@ -92,7 +83,7 @@
 							</header>
 							<div id="update"></div>
 							<br>
-								<button id="show_log" class="button small" onclick="showlog()">View Changelog</button>
+								<button id="show_log" class="button small">VIEW CHANGELOG</button>
 								<br>
 									<br>
 										<textarea name="changelog" id="changelog" cols="40" rows="5" readonly></textarea>
@@ -162,7 +153,7 @@
 							<li><a href="https://twitter.com/Frozen_sat" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 							<li><a href="https://www.youtube.com/channel/UCYbCFRgLZwDGIps8hHUf_Uw" class="icon brands fa-youtube"><span class="label">Youtube</span></a></li>
 						</ul>
-						<p class="copyright">&copy; Copyright. Design: <a href="http://html5up.net">HTML5 UP</a>.</p>
+						<p class="copyright">Design: <a href="http://html5up.net">HTML5 UP</a>.</p>
 					</section>
 
 			</div>
@@ -174,19 +165,15 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/table.js"></script>
-			<script>
-			$(function(){
-				$("#changelog").load("change.txt");
-			});
-			
-			function showlog() {
-				if ($('#changelog').css('display') == 'none') {
-					$('#changelog').show();
-				} else {
-					$('#changelog').hide();
-				}
-			}
-			</script>
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164267471-1"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-164267471-1');
+            </script>
 
 	</body>
 </html>

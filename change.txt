@@ -1,27 +1,53 @@
 ﻿(2020.06.01) Add Kaiden Aura [XDEN]
+
 (2020.05.16) Add Be-Music Polyphony [Bitmap]
+
 (2020.05.10) Add Praesidium tridacnae [Babel]
+
 (2020.05.07) Add 蘭 [草]
+
 (2020.04.14) Fix Pourqaa diff
+
 (2020.04.10) Add Celeste [Atlantis]
+
 (2020.04.06) Add Armageddon [Calamity]
+
 (2020.03.31) Add DESTINY - Gravity -
+
 (2020.03.12) Add ロスト：ユートピアと真理と純粋の極彩世界 [理想郷]
+
 (2020.03.09) Add Auburn Halo [Strauss]
+
 (2020.03.06) Add Legend of Eastern Rabbit -SKY DEFENDER- [Shade]
+
 (2020.02.28) Add MooN -Knight-
+
 (2020.02.15) Add So Fresh So Good [Soda]
+
 (2020.02.09) Add Good Bye, Blue Ogre (Welcome Insane)
+
 (2019.12.14) Add Sterelogue [Dash]
+
 (2019.12.09) Add breath [math pop]
+
 (2019.11.25) Add カラッポ・ノンフィクション [みらい]
+
 (2019.11.17) Add AXION [Selentia]
+
 (2019.11.14) Add Ready to Go (^_^)
+
 (2019.11.01) Add L99 (BGA Remake) -DIARY-
+
 (2019.10.28) Add U-NI [CODE]
+
 (2019.10.25) Add Snow White [Avalanche]
+
 (2019.10.14) Add Bouquet colore [Macuil]
+
 (2019.10.11) Add Apocaliptix [Doomsayer]
+
 (2019.10.09) Add 花たちに希望を [あの花]
+
 (2019.10.09) Add introspect [SP ANOTHER] & [SP INSANE]
+
 (2019.10.05) Site Open.
