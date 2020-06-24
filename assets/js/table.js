@@ -1,7 +1,10 @@
+// Table Load Message
+$(".tableflame").prepend("<div id='tableLoading'>Loading...</div>");
+
 // メニュー開閉
 function menu(tName) {
     var tMenu = document.getElementById(tName).style;
-    if (tMenu.display == 'none') {
+    if (tMenu.display == "none") {
         tMenu.display = "block";
     } else {
         tMenu.display = "none";
@@ -12,35 +15,38 @@ function menu(tName) {
 $(document).ready(function() {
     $.getJSON($("meta[name=bmstable]").attr("content"), function(header) {
         $("#update").text("Last Update : " + header.last_update);
+        makeChangelog();
         $.getJSON(header.data_url, function(information) {
             // headerのsort有無で分岐
-            if (header["level_order"]) {
-                makeBMSTable(information, header.symbol, header["level_order"]);
+            if (header.level_order) {
+                makeBMSTable(information, header.symbol, header.level_order);
             } else {
                 makeBMSTable(information, header.symbol);
             }
-        });
-        // Changelog
-        $(function() {
-            $("#changelog").load("change.txt");
-            $('#show_log').click(function() {
-                if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
-                    $("#changelog").show();
-                    $(this).html("HIDE CHANGELOG");
-                } else {
-                    $("#changelog").hide();
-                    $(this).html("VIEW CHANGELOG");
-                }
-            });
+            $("#tableLoading").remove();
         });
     });
 });
+
+// Changelog
+function makeChangelog() {
+    $("#changelog").load("change.txt");
+    $("#show_log").click(function() {
+        if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
+            $("#changelog").show();
+            $(this).html("HIDE CHANGELOG");
+        } else {
+            $("#changelog").hide();
+            $(this).html("VIEW CHANGELOG");
+        }
+    });
+}
 
 
 // ソートのための引数追加
 function makeBMSTable(info, mark, order) {
     // orderが未指定の場合はnull
-    if (typeof order === 'undefined') {
+    if (typeof order === "undefined") {
         order = null;
     }
 
@@ -104,16 +110,20 @@ function makeBMSTable(info, mark, order) {
 
     // 表のクリア
     obj.html("");
+    $("<thead><tr><th width='6%'>Lv</th><th width='1%'>Movie</th><th width='1%'>Score</th><th width='20%'>Title</th><th width='20%'>Artist</th><th width='5%'>DL</th><th width='25%'>Comment</th></tr></thead><tbody></tbody>").appendTo(obj);
     var obj_sep = null;
+    var shortcut = $("<table id='shortcut_table'></table>");
     for (var i = 0; i < info.length; i++) {
         // 難度ごとの区切り
         if (x != info[i].level) {
             // 前の区切りに譜面数、平均密度を追加
             if (obj_sep != null) {
-                obj_sep.html("<td colspan='7' align='center'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+                obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+                $("<td><a href='#" + mark + x + "'>" + mark + x + "</a></td>").appendTo(shortcut);
             }
             obj_sep = $("<tr class='tr_separate' id='" + mark + info[i].level + "'></tr>");
             obj_sep.appendTo(obj);
+            shortcut.appendTo("#shortcut_diff");
             count = 0;
             x = info[i].level;
         }
@@ -145,18 +155,18 @@ function makeBMSTable(info, mark, order) {
         // 動画
         if (info[i].video1 != "" && info[i].video1 != null) {
             // ニコニコ
-            $("<td width='1%' align='center'><a href='http://www.nicovideo.jp/watch/sm" + info[i].video1 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
+            $("<td width='1%'><a href='http://www.nicovideo.jp/watch/sm" + info[i].video1 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
         } else if (info[i].video2 != "" && info[i].video2 != null) {
             // YouTube
-            $("<td width='1%' align='center'><a href='https://www.youtube.com/watch?v=" + info[i].video2 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
+            $("<td width='1%'><a href='https://www.youtube.com/watch?v=" + info[i].video2 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
         } else if (info[i].video3 != "" && info[i].video3 != null) {
             // vimeo
-            $("<td width='1%' align='center'><a href='http://vimeo.com/" + info[i].video3 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
+            $("<td width='1%'><a href='http://vimeo.com/" + info[i].video3 + "' class='fas fa-lg fa-play' target='_blank'></a></td>").appendTo(str);
         } else {
             $("<td width='1%'></td>").appendTo(str);
         }
         // 譜面画像
-        $("<td width='1%' align='center'><a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" + info[i].md5 + "' class='fas fa-lg fa-music' target='_blank'></a></td>").appendTo(str);
+        $("<td width='1%'><a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" + info[i].md5 + "' class='fas fa-lg fa-music' target='_blank'></a></td>").appendTo(str);
 
         // タイトル
         $("<td width='20%'>" + "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5=" + info[i].md5 + "' target='_blank'>" + info[i].title + "</a></td>").appendTo(str);
@@ -209,6 +219,7 @@ function makeBMSTable(info, mark, order) {
     // 最後の区切り処理
     // マークが抜け落ちてたので追加
     if (obj_sep != null) {
-        obj_sep.html("<td colspan='7' align='center'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+        obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+        $("<td><a href='#" + mark + x + "'>" + mark + x + "</a></td>").appendTo(shortcut);
     }
 }

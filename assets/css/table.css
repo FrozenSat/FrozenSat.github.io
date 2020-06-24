@@ -1,16 +1,39 @@
-﻿#update {
+﻿/* Main Page Video */
+
+.video_wrap {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+
+.video_wrap iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Table Page */
+
+#update {
   font-weight: bold;
   font-size: 1.3em;
 }
 
-#shortcut_diff {
-  color: #000;
+#tableLoading {
+  font-weight: 500;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#shortcut_table {
+  color: #222222;
   font-size: 0.9em;
   text-align: center;
   border: solid 2px #000;
 }
 
-#shortcut_diff td {
+#shortcut_table td {
   border: solid 1px #000;
 }
 
