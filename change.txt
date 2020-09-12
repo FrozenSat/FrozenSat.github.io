@@ -1,4 +1,5 @@
-﻿(2020.09.07) Add Banhotta [未来差分研究所]
+﻿(2020.09.13) Add クロノバイザー [パラドックス]
+(2020.09.07) Add Banhotta [未来差分研究所]
 (2020.09.07) Add Life is PIANO [未来差分研究所]
 (2020.08.27) Add Just One Word [EX]
 (2020.08.27) Add Just One Word [NULL]
