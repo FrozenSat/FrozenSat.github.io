@@ -118,7 +118,11 @@ function makeBMSTable(info, mark, order) {
         if (x != info[i].level) {
             // 前の区切りに譜面数、平均密度を追加
             if (obj_sep != null) {
-                obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+                if (count != 1) {
+                    obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Charts)</b></td>");
+                } else {
+                    obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Chart)</b></td>");
+                }
                 $("<td><a href='#" + mark + x + "'>" + mark + x + "</a></td>").appendTo(shortcut);
             }
             obj_sep = $("<tr class='tr_separate' id='" + mark + info[i].level + "'></tr>");
@@ -215,11 +219,14 @@ function makeBMSTable(info, mark, order) {
         count++;
     }
 
-
     // 最後の区切り処理
     // マークが抜け落ちてたので追加
     if (obj_sep != null) {
-        obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Patterns)</b></td>");
+        if (count != 1) {
+            obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Charts)</b></td>");
+        } else {
+            obj_sep.html("<td colspan='7'>" + "<b>" + mark + x + " (" + count + " Chart)</b></td>");
+        }
         $("<td><a href='#" + mark + x + "'>" + mark + x + "</a></td>").appendTo(shortcut);
     }
 }
