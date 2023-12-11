@@ -35,6 +35,7 @@
 
 #shortcut_table td {
   border: solid 1px #000;
+  background-color: #fff;
 }
 
 #changelog {
@@ -141,7 +142,8 @@
   background-color: #ffa500;
 }
 
-.tableflame tr, a {
+.tableflame tr,
+a {
   /*Firefox向け*/
   -moz-transition-property: color, background-color;
   -moz-transition-duration: 0.2s;
