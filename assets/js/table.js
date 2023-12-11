@@ -1,17 +1,7 @@
 // Table Load Message
 $("#main_diff").prepend("<div id='tableLoading'>Loading...</div>");
 
-// メニュー開閉
-function menu(tName) {
-  var tMenu = document.getElementById(tName).style;
-  if (tMenu.display == "none") {
-    tMenu.display = "block";
-  } else {
-    tMenu.display = "none";
-  }
-}
-
-$(document).ready(function () {
+$(function () {
   $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
     $("#update").text("Last Update : " + header.last_update);
     makeChangelog();
@@ -31,17 +21,16 @@ $(document).ready(function () {
 function makeChangelog() {
   var $changelog = $("#changelog");
   var $show_log = $("#show_log");
+  var isLogView = false;
   $changelog.load("change.txt");
   $show_log.click(function () {
-    if (
-      $changelog.css("display") == "none" &&
-      $show_log.html() == "VIEW CHANGELOG"
-    ) {
-      $changelog.show();
-      $show_log.html("HIDE CHANGELOG");
+    isLogView = !isLogView;
+    if (isLogView === true) {
+      $changelog.css("display", "block");
+      $show_log.text("HIDE CHANGELOG");
     } else {
-      $changelog.hide();
-      $show_log.html("VIEW CHANGELOG");
+      $changelog.css("display", "none");
+      $show_log.text("VIEW CHANGELOG");
     }
   });
 }
@@ -103,7 +92,7 @@ function makeBMSTable(info, mark, order) {
   }
 
   // 表のクリア
-  obj.html("");
+  obj.empty();
   $(
     "<thead>" +
       "<tr>" +
@@ -119,7 +108,7 @@ function makeBMSTable(info, mark, order) {
       "<tbody></tbody>"
   ).appendTo(obj);
   var obj_sep = null;
-  shortcut.html("");
+  shortcut.empty();
   $("<tbody></tbody>").appendTo(shortcut);
   var shortcut_str = $("<tr></tr>");
   info.forEach((i) => {
