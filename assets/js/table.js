@@ -1,58 +1,89 @@
-// Table Load Message
-$("#main_diff").prepend("<div id='tableLoading'>Loading...</div>");
+"use strict";
 
-$(function () {
-  $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
-    $("#update").text("Last Update : " + header.last_update);
+// Table Load Message
+const mainDiff = document.getElementById("main_diff");
+if (mainDiff) {
+  mainDiff.insertAdjacentHTML(
+    "afterbegin",
+    "<div id='tableLoading'>Loading...</div>",
+  );
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const metaTag = document.querySelector("meta[name='bmstable']");
+  if (!metaTag) return;
+
+  try {
+    const headerRes = await fetch(metaTag.getAttribute("content"));
+    const header = await headerRes.json();
+
+    const updateElement = document.getElementById("update");
+    if (updateElement) {
+      updateElement.textContent = `Last Update : ${header.last_update}`;
+    }
+
     makeChangelog();
-    $.getJSON(header.data_url, function (info) {
-      // headerのsort有無で分岐
-      if (header.level_order) {
-        makeBMSTable(info, header.symbol, header.level_order);
-      } else {
-        makeBMSTable(info, header.symbol);
-      }
-      $("#tableLoading").remove();
-    });
-  });
+
+    const dataRes = await fetch(header.data_url);
+    const info = await dataRes.json();
+
+    // Branch based on whether sort order is present in the header
+    if (header.level_order) {
+      makeBMSTable(info, header.symbol, header.level_order);
+    } else {
+      makeBMSTable(info, header.symbol);
+    }
+
+    const tableLoading = document.getElementById("tableLoading");
+    if (tableLoading) {
+      tableLoading.remove();
+    }
+  } catch (error) {
+    console.error("Failed to load BMS table data:", error);
+  }
 });
 
 // Changelog
-function makeChangelog() {
-  var $changelog = $("#changelog");
-  var $show_log = $("#show_log");
-  var isLogView = false;
-  $changelog.load("change.txt");
-  $show_log.click(function () {
+async function makeChangelog() {
+  const changelog = document.getElementById("changelog");
+  const showLog = document.getElementById("show_log");
+
+  if (!changelog || !showLog) return;
+
+  let isLogView = false;
+
+  try {
+    const res = await fetch("change.txt");
+    const text = await res.text();
+    changelog.innerHTML = text;
+  } catch (error) {
+    console.error("Failed to load changelog:", error);
+  }
+
+  showLog.addEventListener("click", () => {
     isLogView = !isLogView;
     if (isLogView === true) {
-      $changelog.css("display", "block");
-      $show_log.text("HIDE CHANGELOG");
+      changelog.style.display = "block";
+      showLog.textContent = "HIDE CHANGELOG";
     } else {
-      $changelog.css("display", "none");
-      $show_log.text("VIEW CHANGELOG");
+      changelog.style.display = "none";
+      showLog.textContent = "VIEW CHANGELOG";
     }
   });
 }
 
-// ソートのための引数追加
-function makeBMSTable(info, mark, order) {
-  // orderが未指定の場合はnull
-  if (typeof order === "undefined") order = null;
+// Added argument for sorting
+function makeBMSTable(info, mark, order = null) {
+  const obj = document.getElementById("table_int");
+  const shortcut = document.getElementById("shortcut_table");
 
-  var x,
-    count = 0,
-    obj = $("#table_int"),
-    shortcut = $("#shortcut_table");
+  if (!obj || !shortcut) return;
 
   if (order) {
-    var orderAry = [];
-    order.forEach((i) => {
-      orderAry.push(i.toString());
-    });
+    const orderAry = order.map((i) => i.toString());
 
     info.forEach((i) => {
-      i._index = orderAry.indexOf(i.level);
+      i._index = orderAry.indexOf(i.level.toString());
     });
 
     info.sort((a, b) => {
@@ -68,15 +99,17 @@ function makeBMSTable(info, mark, order) {
         return 0;
       }
     });
+
     info.forEach((i) => {
       delete i._index;
     });
   } else {
     info.sort((a, b) => {
-      var aLv = a.level.toString();
-      var bLv = b.level.toString();
-      if (isNaN(a.level) == false && isNaN(b.level) == false) {
-        return a.level - b.level;
+      const aLv = a.level.toString();
+      const bLv = b.level.toString();
+
+      if (!isNaN(a.level) && !isNaN(b.level)) {
+        return Number(a.level) - Number(b.level);
       } else if (aLv < bLv) {
         return -1;
       } else if (aLv > bLv) {
@@ -91,184 +124,135 @@ function makeBMSTable(info, mark, order) {
     });
   }
 
-  // 表のクリア
-  obj.empty();
-  $(
-    "<thead>" +
-      "<tr>" +
-      "<th style='width: 6%'>Lv</th>" +
-      "<th style='width: 1%'>Movie</th>" +
-      "<th style='width: 1%'>Score</th>" +
-      "<th style='width: 20%'>Title</th>" +
-      "<th style='width: 20%'>Artist</th>" +
-      "<th style='width: 5%'>DL</th>" +
-      "<th style='width: 25%'>Comment</th>" +
-      "</tr>" +
-      "</thead>" +
-      "<tbody></tbody>"
-  ).appendTo(obj);
-  var obj_sep = null;
-  shortcut.empty();
-  $("<tbody></tbody>").appendTo(shortcut);
-  var shortcut_str = $("<tr></tr>");
+  // Clear table contents
+  obj.innerHTML = "";
+  shortcut.innerHTML = "";
+
+  // Set up headers
+  const theadHTML = `
+    <thead>
+      <tr>
+        <th style='width: 6%'>Lv</th>
+        <th style='width: 1%'>Movie</th>
+        <th style='width: 1%'>Score</th>
+        <th style='width: 20%'>Title</th>
+        <th style='width: 20%'>Artist</th>
+        <th style='width: 5%'>DL</th>
+        <th style='width: 25%'>Comment</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+  obj.insertAdjacentHTML("beforeend", theadHTML);
+  const tbody = obj.querySelector("tbody");
+
+  const shortcutTbody = document.createElement("tbody");
+  shortcut.appendChild(shortcutTbody);
+  const shortcutRow = document.createElement("tr");
+  shortcutTbody.appendChild(shortcutRow);
+
+  let currentLevel = null;
+  let count = 0;
+  let sepRowPlaceholder = null;
+
   info.forEach((i) => {
-    // 難度ごとの区切り
-    if (x != i.level) {
-      // 前の区切りに譜面数、平均密度を追加
-      if (obj_sep != null) {
-        if (count != 1) {
-          obj_sep.html(
-            "<td colspan='7'>" +
-              "<b>" +
-              mark +
-              x +
-              " (" +
-              count +
-              " Charts)</b>" +
-              "</td>"
-          );
-        } else {
-          obj_sep.html(
-            "<td colspan='7'>" +
-              "<b>" +
-              mark +
-              x +
-              " (" +
-              count +
-              " Chart)</b>" +
-              "</td>"
-          );
-        }
-        $(
-          "<td>" + "<a href='#" + mark + x + "'>" + mark + x + "</a>" + "</td>"
-        ).appendTo(shortcut_str);
+    // Difficulty separator
+    if (currentLevel !== i.level) {
+      // Add count to the previous separator
+      if (sepRowPlaceholder !== null) {
+        const chartText = count !== 1 ? "Charts" : "Chart";
+        sepRowPlaceholder.innerHTML = `<td colspan='7'><b>${mark}${currentLevel} (${count} ${chartText})</b></td>`;
+
+        shortcutRow.insertAdjacentHTML(
+          "beforeend",
+          `<td><a href='#${mark}${currentLevel}'>${mark}${currentLevel}</a></td>`,
+        );
       }
-      obj_sep = $("<tr class='tr_separate' id='" + mark + i.level + "'></tr>");
-      obj_sep.appendTo(obj);
-      shortcut_str.appendTo(shortcut);
+
+      // Create new separator placeholder
+      sepRowPlaceholder = document.createElement("tr");
+      sepRowPlaceholder.className = "tr_separate";
+      sepRowPlaceholder.id = `${mark}${i.level}`;
+      tbody.appendChild(sepRowPlaceholder);
+
       count = 0;
-      x = i.level;
+      currentLevel = i.level;
     }
-    // 本文
-    var str = $("<tr class='tr_normal'></tr>");
-    if (i.state == 1) str = $("<tr class='state1'></tr>");
-    if (i.state == 2) str = $("<tr class='state2'></tr>");
-    if (i.state == 3) str = $("<tr class='state3'></tr>");
-    if (i.state == 4) str = $("<tr class='state4'></tr>");
-    if (i.state == 5) str = $("<tr class='state5'></tr>");
-    if (i.state == 6) str = $("<tr class='state6'></tr>");
 
-    // レベル表記
-    $("<td>" + mark + x + "</td>").appendTo(str);
-    // 動画
+    // Build the row
+    const tr = document.createElement("tr");
+
+    // Assign classes
+    if (i.state >= 1 && i.state <= 6) {
+      tr.className = `state${i.state}`;
+    } else {
+      tr.className = "tr_normal";
+    }
+
+    // Level
+    let rowHTML = `<td>${mark}${currentLevel}</td>`;
+
+    // Movie (Video)
     if (i.video2) {
-      // YouTube
-      $(
-        "<td>" +
-          "<a href='https://www.youtube.com/watch?v=" +
-          i.video2 +
-          "' class='fas fa-lg fa-play' target='_blank'></a></td>"
-      ).appendTo(str);
+      rowHTML += `<td><a href='https://www.youtube.com/watch?v=${i.video2}' class='fas fa-lg fa-play' target='_blank'></a></td>`;
     } else {
-      $("<td></td>").appendTo(str);
+      rowHTML += `<td></td>`;
     }
-    // 譜面画像
-    $(
-      "<td>" +
-        "<a href='http://www.ribbit.xyz/bms/score/view?p=1&md5=" +
-        i.md5 +
-        "' class='fas fa-lg fa-music' target='_blank'></a></td>"
-    ).appendTo(str);
 
-    // タイトル
-    $(
-      "<td>" +
-        "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5=" +
-        i.md5 +
-        "' target='_blank'>" +
-        i.title +
-        "</a></td>"
-    ).appendTo(str);
-    // アーティスト
-    var astr = "";
+    // Score Image
+    rowHTML += `<td><a href='https://bms-score-viewer.pages.dev/view?md5=${i.md5}' class='fas fa-lg fa-music' target='_blank'></a></td>`;
+
+    // Title
+    rowHTML += `<td><a href='https://ir.stellabms.xyz/charts/${i.md5}' target='_blank'>${i.title}</a></td>`;
+
+    // Artist
+    let astr = "";
     if (i.url) {
-      if (i.artist) {
-        astr = "<a href='" + i.url + "'>" + i.artist + "</a>";
-      } else {
-        astr = "<a href='" + i.url + "'>" + i.url + "</a>";
-      }
-    } else {
-      if (i.artist) {
-        astr = i.artist;
-      }
+      astr = `<a href='${i.url}'>${i.artist ? i.artist : i.url}</a>`;
+    } else if (i.artist) {
+      astr = i.artist;
     }
+
+    // Pack
     if (i.url_pack) {
-      if (i.name_pack) {
-        astr += "<br>(<a href='" + i.url_pack + "'>" + i.name_pack + "</a>)";
-      } else {
-        astr += "<br>(<a href='" + i.url_pack + "'>" + i.url_pack + "</a>)";
-      }
-    } else {
-      if (i.name_pack) {
-        astr += "<br>(" + i.name_pack + ")";
-      }
+      astr += `<br>(<a href='${i.url_pack}'>${i.name_pack ? i.name_pack : i.url_pack}</a>)`;
+    } else if (i.name_pack) {
+      astr += `<br>(${i.name_pack})`;
     }
-    $("<td>" + astr + "</td>").appendTo(str);
-    // 差分
+    rowHTML += `<td>${astr}</td>`;
+
+    // Diff
     if (i.url_diff) {
       if (i.name_diff) {
-        $(
-          "<td>" + "<a href='" + i.url_diff + "'>" + i.name_diff + "</a></td>"
-        ).appendTo(str);
+        rowHTML += `<td><a href='${i.url_diff}'>${i.name_diff}</a></td>`;
       } else {
-        $(
-          "<td>" +
-            "<a href='" +
-            i.url_diff +
-            "' class='fas fa-lg fa-arrow-down'></a></td>"
-        ).appendTo(str);
+        rowHTML += `<td><a href='${i.url_diff}' class='fas fa-lg fa-arrow-down'></a></td>`;
       }
     } else {
       if (i.name_diff) {
-        $("<td>" + i.name_diff + "</td>").appendTo(str);
+        rowHTML += `<td>${i.name_diff}</td>`;
       } else {
-        $("<td>" + "同梱" + "</td>").appendTo(str);
+        rowHTML += `<td>同梱</td>`;
       }
     }
-    // コメント
-    $("<td>" + i.comment + "</td>").appendTo(str);
-    str.appendTo(obj);
+
+    // Comment
+    const safeComment = i.comment ? i.comment : "";
+    rowHTML += `<td>${safeComment}</td>`;
+
+    tr.innerHTML = rowHTML;
+    tbody.appendChild(tr);
+
     count++;
   });
 
-  // 最後の区切り処理
-  // マークが抜け落ちてたので追加
-  if (obj_sep != null) {
-    if (count != 1) {
-      obj_sep.html(
-        "<td colspan='7'>" +
-          "<b>" +
-          mark +
-          x +
-          " (" +
-          count +
-          " Charts)</b>" +
-          "</td>"
-      );
-    } else {
-      obj_sep.html(
-        "<td colspan='7'>" +
-          "<b>" +
-          mark +
-          x +
-          " (" +
-          count +
-          " Chart)</b>" +
-          "</td>"
-      );
-    }
-    $(
-      "<td>" + "<a href='#" + mark + x + "'>" + mark + x + "</a>" + "</td>"
-    ).appendTo(shortcut_str);
+  // Final group processing (the last level)
+  if (sepRowPlaceholder !== null) {
+    const chartText = count !== 1 ? "Charts" : "Chart";
+    sepRowPlaceholder.innerHTML = `<td colspan='7'><b>${mark}${currentLevel} (${count} ${chartText})</b></td>`;
+    shortcutRow.insertAdjacentHTML(
+      "beforeend",
+      `<td><a href='#${mark}${currentLevel}'>${mark}${currentLevel}</a></td>`,
+    );
   }
 }
